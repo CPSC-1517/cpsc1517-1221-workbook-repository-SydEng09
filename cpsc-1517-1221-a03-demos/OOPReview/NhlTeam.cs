@@ -94,12 +94,60 @@ namespace OOPReview
         {
             get => (Wins * 2) + OvertimeLosses;
         }
+
+        public List<Roster> Players { get; private set; }
+
+        public NhlTeam(
+           NHLConference conference,
+           NHLDivision division,
+           string name,
+           string city,
+           List<Roster> players)
+        { 
+            if(players == null)
+            {
+                players = new List<Roster>();
+            }
+            else
+            {
+                Players = players;
+            }
+        }
+        private const int MaxPlayers = 23;
+        public void AddPlayer(Roster currentPlayer)
+        {
+            if(Players.Count >= MaxPlayers)
+            {
+                throw new ArgumentException("Roster is full. Remove a player");
+            }
+            Players.Add(currentPlayer);
+        }
+        public void RemovePlayer(int no)
+        {
+            bool foundPlayer=false;
+            int playerindex = -1;
+            for(int index=0; index<Players.Count; index++)
+            {
+                if (Players[index].No == no)
+                {
+                    foundPlayer=true;
+                    playerindex = index;
+                    index = Players.Count;
+                }
+            }
+            if (!foundPlayer)
+            {
+                throw new ArgumentException($"Player {no} does not exist.");
+            }
+            Players.RemoveAt(playerindex);
+        }
         public NhlTeam(
             NHLConference conference, 
             NHLDivision division, 
             string name, 
             string city)
         {
+            Players = new List<Roster>();
             Conference = conference;
             Division = division;
             Name = name;
