@@ -42,7 +42,7 @@ namespace OOPReview
         {
             No = no;
             Playername = playername;
-            Position = Position;
+            Position = position;
         }
         public override string ToString()
         {
