@@ -10,9 +10,25 @@ namespace NHLSystem
     {
         public Position Position { get; set; }
         public int Goals { get; set; }
-        public int Assists { get; set; }    
-        public int PrimaryNo { get; set; }
+        public int Assists { get; set; }
 
+        private int _primaryNo;
+        public int PrimaryNo
+        {
+            get
+            {
+                return _primaryNo;
+            }
+            set
+            {
+                if(value <0 || value > 98)
+                {
+                    throw new ArgumentOutOfRangeException("PrimaryNo has to be between 0 and 98");
+                }
+                _primaryNo = value;
+            }
+        }
+           
         public int Points
         {
             get
@@ -33,6 +49,10 @@ namespace NHLSystem
             PrimaryNo=primaryNo;
             Goals=goals;
             Assists=assists;
+        }
+        public override string ToString()
+        {
+            return  $"{FullName}, {PrimaryNo}, {Position}, {Goals}, {Assists}, {Points}";
         }
     }
 }

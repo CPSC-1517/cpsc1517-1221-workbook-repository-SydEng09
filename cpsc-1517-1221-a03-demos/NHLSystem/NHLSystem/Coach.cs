@@ -8,11 +8,15 @@ namespace NHLSystem
 {
     public class Coach : Person
     {
-        public DateTime HireDate { get; set; }
+        public DateTime StartDate { get; set; }
 
-        public Coach(string fullName, DateTime hireDate) : base(fullName)
+        public Coach(string fullName, DateTime startDate) : base(fullName)
         {
-            HireDate = hireDate;
+            StartDate = startDate;
+        }
+        public override string ToString()
+        {
+            return $"{FullName}, {StartDate}";
         }
     }
 }
