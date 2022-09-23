@@ -12,7 +12,7 @@ namespace NHLSystem
         public Coach Coach { get; private set; } = null!;
         public List<Player> Players { get; } = new List<Player>();
 
-        public void AddPLayer(Player newPLayer)
+        public void AddPlayer(Player newPLayer)
         {
             if(newPLayer == null)
             {
@@ -22,15 +22,17 @@ namespace NHLSystem
             {
                 throw new ArgumentException ("team is full. can not add anymore players");
             }
-            bool primaryNoFound = false;
-            foreach(Player currentPlayer in Players)
-            {
-                if(currentPlayer.PrimaryNo == newPLayer.PrimaryNo)
-                {
-                    primaryNoFound = true;
-                    break;
-                }
-            }
+            //bool primaryNoFound = false;
+            //foreach(Player currentPlayer in Players)
+            //{
+            //    if(currentPlayer.PrimaryNo == newPLayer.PrimaryNo)
+            //    {
+            //        primaryNoFound = true;
+            //        break;
+            //    }
+            //}
+            bool primaryNoFound = Players.Any(currentPlayer => currentPlayer.PrimaryNo == newPLayer.PrimaryNo);
+
             if (primaryNoFound)
             {
                 throw new ArgumentException("PrimaryNo is already in use");
@@ -42,13 +44,16 @@ namespace NHLSystem
         {
             get
             {
-                int totalPoints = 0;
-                foreach(Player currentPlayer in Players)
-                {
-                    totalPoints += currentPlayer.Points;
-                }
-                return totalPoints;
+                //int totalPoints = 0;
+                //foreach(Player currentPlayer in Players)
+                //{
+                //    totalPoints += currentPlayer.Points;
+                //}
+                //return totalPoints;
+                //return Players.Select(currentPlayer => currentPlayer.Points).Sum();
+                return Players.Sum(currentPlayer => currentPlayer.Points);
             }
+
         }
 
         private string _teamName= string.Empty;
