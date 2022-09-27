@@ -72,6 +72,10 @@ Console.WriteLine($"Total player points is {oilerTeam.TotalPlayerPoints}");
 CreatePlayersCsvFile();
 CreateTeamJsonFile();
 
+var Team = ReadTeamInfoFromJsonFile();
+//var Team = ReadPlayerCsvFile();
+DisplayTeamInfo(Team);
+
 static void CreatePlayersCsvFile()// CreateTeamJsonFile
 {
     DateTime startDate = DateTime.Parse("2021-09-02");
@@ -90,6 +94,80 @@ static void CreatePlayersCsvFile()// CreateTeamJsonFile
         .ToList());
 }
 
+static Team ReadPlayerCsvFile()
+{
+    const string PLayerCsvFile = "../../../Players.csv";
+    Coach teamCoach = new Coach("Jay Woodcroft", DateTime.Parse("2022-02-10"));
+    Team oilersTeam = new Team("Edmonton Oilers", teamCoach);
+    try
+    {
+        string[] allLines = File.ReadAllLines(PLayerCsvFile);
+        foreach(string currentLine in allLines)
+        {
+            try
+            {
+                Player currentPlayer = null;
+                bool success = Player.TryParse(currentLine, out currentPlayer);
+                if (success)
+                {
+                    oilersTeam.AddPlayer(currentPlayer);
+                }
+            }
+            catch(FormatException ex)
+            {
+                Console.WriteLine($"Format exception {ex.Message}");
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Error parsing data from line with execption {ex.Message}");
+            }
+        }
+    }
+    catch(Exception ex)
+    {
+        Console.WriteLine($"Error reading from file with exception {ex.Message}");
+    }
+    return oilersTeam;
+}
+
+static void DisplayTeamInfo(Team currentTeam)
+{
+    if (currentTeam == null)
+    {
+        Console.WriteLine("There is no team supplied");
+
+    }
+    else
+    {
+        Console.WriteLine($"Team: {currentTeam.TeamName}");
+        Console.WriteLine($"Coach: {currentTeam.Coach} hired on {currentTeam.Coach.StartDate.ToString("MMM dd, yyyy")}");
+        foreach (Player currentPLayer in currentTeam.Players)
+        {
+            Console.WriteLine(currentPLayer.ToString());
+        };
+    }
+}
+ 
+static Team ReadTeamInfoFromJsonFile()
+    {
+        Team currentTeam = null!;
+        try
+        {
+            const string TeamJsonFile = "../../../Players.json";
+            string jsonString = File.ReadAllText(TeamJsonFile);
+            JsonSerializerOptions options = new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                IncludeFields = true,
+            };
+            currentTeam = JsonSerializer.Deserialize<Team>(jsonString, options);
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine($"Error reading from json file with exception {ex.Message}");
+        }
+        return currentTeam;
+    }
     static void CreateTeamJsonFile()
     {
         DateTime startDate = DateTime.Parse("2021-09-02");
@@ -110,7 +188,8 @@ static void CreatePlayersCsvFile()// CreateTeamJsonFile
         };
         string jsonString = JsonSerializer.Serialize<Team>(oilerTeam, options);
         File.WriteAllText(TeamJsonFile, jsonString);
-    }
+    } 
+
 
 
 
