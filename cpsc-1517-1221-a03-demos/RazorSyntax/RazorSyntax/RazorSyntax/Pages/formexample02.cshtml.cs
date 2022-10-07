@@ -23,6 +23,11 @@ namespace RazorSyntax.Pages
                 }
             }
             generatedNumber.Sort();
+            FeedBackMessage = "";
+            foreach(var num in generatedNumber)
+            {
+                FeedBackMessage += num + " ";
+            }
             FeedBackMessage = generatedNumber.ToString();
         }
     }
