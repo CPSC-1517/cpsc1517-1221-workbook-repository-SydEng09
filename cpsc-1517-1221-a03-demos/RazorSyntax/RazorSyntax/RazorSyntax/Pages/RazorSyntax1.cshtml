@@ -1,0 +1,60 @@
+﻿@page
+@model RazorSyntax.Pages.RazorSyntax1Model
+@{}
+    <!-- Single statement blocks  -->
+@{ var total = 7; }
+@{ var myMessage = "Hello World"; }
+
+<!-- Inline expressions -->
+<p>The value of your account is: @total </p>
+<p>The value of myMessage is: @myMessage</p>
+
+<!-- Multi-statement block -->
+@{
+    var greeting = "Welcome to our site!";
+    var weekDay = DateTime.Now.DayOfWeek;
+    var greetingMessage = greeting + " Today is: " + weekDay;
+}
+<p>The greeting is: @greetingMessage</p>
+
+<!-- Single statement block.  -->
+@{ var theMonth = DateTime.Now.Month; }
+<p>The numeric value of the current month: @theMonth</p>
+
+<!-- Multi-statement block. -->
+@{
+    var outsideTemp = 79;
+    var weatherMessage = "Hello, it is " + outsideTemp + " degrees.";
+}
+<p>Today's weather: @weatherMessage</p>
+
+
+<!-- Inline expression, so no semicolon -->
+<p>Today's weather: @weatherMessage</p>
+
+<!-- Embedding a backslash in a string -->
+@{
+    var myFilePath = @"C:\MyFolder\";
+}
+<p>The path is: @myFilePath</p>
+
+<!-- Embedding double quotation marks in a string -->
+@{
+    var myQuote = @"The person said: ""Hello, today is Monday.""";
+}
+<p>@myQuote</p>
+
+<table border="1">
+    <tr>
+        <td>Requested URL</td>
+        <td>Relative Path</td>
+        <td>Full Path</td>
+        <td>HTTP Request Type</td>
+    </tr>
+    <tr>
+        <td>@Request.Url</td>
+        <td>@Request.FilePath</td>
+        <td>@Request.MapPath(Request.FilePath)</td>
+        <td>@Request.RequestType</td>
+    </tr>
+</table>
