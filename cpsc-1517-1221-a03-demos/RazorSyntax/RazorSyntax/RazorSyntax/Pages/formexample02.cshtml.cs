@@ -9,7 +9,7 @@ namespace RazorSyntax.Pages
         {
 
         }
-        public string FeedBackMessage { get; set; };
+        public string FeedBackMessage { get; set; }
         public void OnPOST()
         {
             var rand = new Random();
@@ -23,7 +23,7 @@ namespace RazorSyntax.Pages
                 }
             }
             generatedNumber.Sort();
-            FeedBackMessage = "";
+            FeedBackMessage = " ";
             foreach(var num in generatedNumber)
             {
                 FeedBackMessage += num + " ";
