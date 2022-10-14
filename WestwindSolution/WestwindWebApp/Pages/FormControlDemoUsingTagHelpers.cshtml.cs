@@ -19,12 +19,12 @@ namespace WestwindWebApp.Pages
         public bool Subscribed { get; set; }
         [BindProperty]
         public string Comments { get; set; }
-        public void OnGet()
-        {
-        }
         public void OnPost()
         {
             FeedbackMessage = $"Username={Username}, Age={Age}, Gender={Gender}, Subcribed={Subscribed}, Comments={Comments}";
+        }
+        public void OnGet()
+        {
         }
     }
    
