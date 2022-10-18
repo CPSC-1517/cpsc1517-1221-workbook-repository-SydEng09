@@ -2,28 +2,34 @@
 @model WestwindWebApp.Pages.SendMailModel
 @{
 }
-<form>
+<div class="alert alert-info">
+    @Html.Raw(Model.FeedbackMessage)
+</div>
+<form method="post">
+    <h1>Client App </h1>
+    
     <div class="mb-3">
-        <label asp-for="Username" class="form-label">Gmail Username</label>
-        <input type="text" class="form-control" asp-for="Username">
-    </div>
-    <div class="mb-3">
-        <label asp-for="Password" class="form-label">Password</label>
-        <input type="password" class="form-control" asp-for="Password">
-    </div>
-    <div class="mb-3">
-        <label asp-for="Email" class="form-label">Mail To:</label>
-        <input type="email" class="form-control" asp-for="Email" aria-describedby="emailHelp">
+        <label asp-for="MailUsername" class="form-label">Email Address</label>
+        <input type="email" required class="form-control" asp-for="MailUsername" aria-describedby="emailHelp">
         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
     </div>
     <div class="mb-3">
-        <label asp-for="Subject" class="form-label">Subject</label>
-        <input type="text" class="form-control" asp-for="Subject">
+        <label asp-for="MailAppPassword" class="form-label">App Password</label>
+        <input type="password" required class="form-control" asp-for="MailAppPassword">
+    </div>
+    <div class="mb-3">
+        <label asp-for="EmailToAddress" class="form-label">Send To:</label>
+        <input type="email" required class="form-control" asp-for="EmailToAddress" aria-describedby="emailHelp">
+    </div>
+    <div class="mb-3">
+        <label asp-for="EmailSubject" class="form-label">Subject</label>
+        <input type="text" required class="form-control" asp-for="EmailSubject">
     </div>
     <div class="form-floating">
-        <textarea class="form-control" placeholder="Message" asp-for="Message"></textarea>
-        <label asp-for="Message">Messsage</label>
+        <textarea class="form-control" rows="10" cols="50" required placeholder="Message" asp-for="EmailMessage"></textarea>
+        <label asp-for="EmailMessage">Messsage</label>
     </div>
    
-     <button type="submit" class="btn btn-primary">Submit</button>
+     <button type="submit" asp-page-handler="SendMail" class="btn btn-primary mt-3">Send</button>
+    <button type="submit" asp-page-handler="ClearForm" class="btn btn-secondary mt-3">clear</button>
 </form>
