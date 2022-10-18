@@ -57,6 +57,9 @@ namespace WestwindWebApp.Pages
             {
                 sendMailClient.Send(mailMessage);
                 FeedbackMessage = "<div class='alert alert-primary'>Email sent</div";
+                EmailToAddress = "";
+                EmailSubject = "";
+                EmailMessage = "";
             }
             catch (Exception)
             {
