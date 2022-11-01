@@ -16,7 +16,7 @@ namespace WestWindSystem.Entities
         public int Id { get; set; }
         [Required(ErrorMessage ="Category Name is required")]
         [MaxLength(15, ErrorMessage ="Max Lenght is 15 characters")]
-        public string CategoryName { get; set; } = String.Empty;
+        public string CategoryName { get; set; } = null!;
         [Column(TypeName = "ntext")] //only use column if it isnt the same name as in the database
         public string? Description { get; set; }
         [Column(TypeName ="varbinary")]
