@@ -8,36 +8,49 @@ namespace WestwindWebApp.Pages.Products
     public class QueryModel : PageModel
     {
         private readonly CategoryServices _categoryServices;
+        private readonly ProductServices _productServices;
 
-        public QueryModel(CategoryServices categoryServices)
+        public QueryModel(CategoryServices categoryServices, ProductServices productServices)
         {
             _categoryServices = categoryServices;
+            _productServices = productServices;
+
+            CategoryList = _categoryServices.List();
+            CategorySelectList = new SelectList(_categoryServices.List(), "Id", "CategoryName", SelectedCategoryId);
         }
 
         public List<Category> CategoryList { get; private set; }
         [BindProperty()]
-        public int? SelectedCategoryId { get; set; }
+        public int SelectedCategoryId { get; set; }
         public SelectList CategorySelectList { get; set; }
-        public void OnGet(int? currentSelectedCategoryId)
+        [TempData]
+        public string FeedBackMessage { get; set; }
+        [BindProperty]
+        public string? QueryProductName { get; set; }
+        public List<Product>? QueryResultList { get; private set; }
+        public void OnGet()
         {
-           
-            CategoryList = _categoryServices.List();
-            CategorySelectList = new SelectList(_categoryServices.List(), "Id", "CategoryName", SelectedCategoryId);
-            if (currentSelectedCategoryId.HasValue && currentSelectedCategoryId.Value > 0)
-            {
-                SelectedCategoryId = currentSelectedCategoryId.Value;
-            }
+         
+            //if (currentSelectedCategoryId.HasValue && currentSelectedCategoryId.Value > 0)
+            //{
+            //    SelectedCategoryId = currentSelectedCategoryId.Value;
+            //}
         }
-        public IActionResult OnPostSearchByCategory()
+        public void OnPostSearchByCategory()
         {
-            return RedirectToPage(new {currentSelectedCategoryId=SelectedCategoryId});
+            FeedBackMessage = "You clicked search by category";
+            QueryResultList = _productServices.FindProductsByCategoryId(SelectedCategoryId);
         }
-        public IActionResult OnPostSearchByProductName()
+        public void OnPostSearchByProductName()
         {
-            return RedirectToPage();
+            FeedBackMessage = "You clicked product name";
+            QueryResultList = _productServices.FindProductByProductName(QueryProductName);
         }
         public IActionResult OnPostClearForm()
         {
+            FeedBackMessage = "You clicked the clear button";
+            //SelectedCategoryId = 0;
+            //QueryProductName = null;
             return RedirectToPage();
         }
     }

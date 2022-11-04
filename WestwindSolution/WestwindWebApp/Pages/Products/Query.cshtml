@@ -2,7 +2,7 @@
 @model WestwindWebApp.Pages.Products.QueryModel
 @{
 }
-
+@*@if(!string.IsNullOrWhiteSpace(FeedBackMessage))*@
 <form method="post">
     <div class="mb-3">
         <label asp-for="SelectedCategoryId">Category</label>
@@ -18,7 +18,36 @@
     <option selected>---select a category</option>
     </select>
     </div>
-    <button type="submit"asp-asp-page-handler="SearchByCategory" class="btn btn-primary">Search by Category</button>
-    <button type="submit" asp-asp-page-handler="SearchByProductName" class="btn btn-primary">Search by Product Name</button>
-    <button type="submit" asp-asp-page-handler="ClearForm" class="btn btn-light">Clear Form</button>
+    <div>
+        <label asp-for="QueryProductName" class="form-label">Product Name</label>
+        <input class="form-control"
+        asp-for="QueryProductName" />
+
+    </div>
+   
+    <button type="submit" asp-page-handler="SearchByCategory" class="btn btn-primary mt-3">Search by Category</button>
+    <button type="submit" asp-page-handler="SearchByProductName" class="btn btn-primary mt-3">Search by Product Name</button>
+    <button type="submit" asp-page-handler="ClearForm" class="btn btn-light mt-3">Clear Form</button>
 </form>
+@if (Model.QueryResultList != null)
+{
+    <table class="table" style= "color:black">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Product Name</th>
+                <th>Unit Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var currentProduct in Model.QueryResultList)
+            {
+                <tr>
+                    <td>@currentProduct.Id</td>
+                    <td>@currentProduct.ProductName</td>
+                    <td>@currentProduct.UnitPrice</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
