@@ -17,5 +17,10 @@ namespace WestWindSystem.DAL
         public DbSet<BuildVersion> BuildVersions => Set<BuildVersion>();
         public DbSet<Category> Categories => Set<Category>();
         public DbSet<Product> Products => Set<Product>();
+        //public virtual DbSet<Region> Regions { get; set; }
+
+        public virtual DbSet<Supplier> Suppliers { get; set; }
+
+        //public virtual DbSet<Territory> Territories { get; set; }
     }
 }

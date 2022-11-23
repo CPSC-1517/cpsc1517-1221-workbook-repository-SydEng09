@@ -1,0 +1,49 @@
+﻿@page
+@model WestwindWebApp.Pages.Products.ProductCategoryModel
+@{
+}
+@*@if(!string.IsNullOrWhiteSpace(FeedBackMessage))*@
+<h1>Products</h1>
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="SelectedCategoryId">Category</label>
+       @* <select asp-for="SelectedCategoryId" class="form-select" aria-label="Category">
+            <option select> Select a category</option>
+     
+            @foreach(var currentCategory in Model.CategoryList){
+                <option value="@currentCategory.Id">@currentCategory.CategoryName</option>
+            }
+        </select>*@
+        <select asp-for="SelectedCategoryId"
+        asp-items="@Model.CategorySelectList">
+    <option selected>--Select a Category--</option>
+    </select>
+    </div>
+   
+    <button type="submit" asp-page-handler="SearchByCategory" class="btn btn-primary mt-3">Search by Category</button>
+    <button type="submit" asp-page-handler="NewProduct" class="btn btn-primary mt-3">New Product</button>
+    <button type="submit" asp-page-handler="ClearForm" class="btn btn-light mt-3">Clear Form</button>
+</form>
+@if (Model.QueryResultList != null && Model.QueryResultList.Count >0)
+{
+    <table class="table" style= "color:black">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Product Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var currentProduct in Model.QueryResultList)
+            {
+                <tr>
+                    <td>@currentProduct.Id</td>
+                    <td>@currentProduct.ProductName</td>
+                    <td><a href="/Products/ProductCrud/@currentProduct.Id">EDIT</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
