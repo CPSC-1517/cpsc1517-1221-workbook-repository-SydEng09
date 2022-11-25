@@ -19,6 +19,11 @@ namespace WestWindSystem.Entities
         public decimal UnitPrice { get; set; }
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; } = null!;
+        public bool Discontinued { get; set; }
+        public int UnitsOnOrder { get; set; }
+        public string QuantityPerUnit { get; set; } = null!;
+        public int SupplierId { get; set; }
+        public virtual Supplier Supplier { get; set; } = null!;
         
     }
 }
