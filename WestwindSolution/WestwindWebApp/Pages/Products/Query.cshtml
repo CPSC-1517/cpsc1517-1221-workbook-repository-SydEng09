@@ -37,6 +37,7 @@
                 <th>ID</th>
                 <th>Product Name</th>
                 <th>Unit Price</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -46,6 +47,7 @@
                     <td>@currentProduct.Id</td>
                     <td>@currentProduct.ProductName</td>
                     <td>@currentProduct.UnitPrice</td>
+                    <td><a href="/Products/ProductCrud/@currentProduct.Id">edit</a></td>
                 </tr>
             }
         </tbody>
